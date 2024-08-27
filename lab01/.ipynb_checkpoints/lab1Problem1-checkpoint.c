@@ -20,7 +20,7 @@ double conv_f_to_k(double inTemp);
 double conv_k_to_c(double inTemp);
 double conv_k_to_f(double inTemp);
 
-
+// Start Program
 int main(){
     // Define Vars
     char inType;
@@ -109,15 +109,19 @@ double conv_c_to_f(double inTemp){
 double conv_c_to_k(double inTemp){
     return inTemp + 273.15;
 }
+
 double conv_f_to_c(double inTemp){
     return (inTemp - 32.0) * 5/9;
 }
+
 double conv_f_to_k(double inTemp){
     return conv_c_to_k(conv_f_to_c(inTemp));
 }
+
 double conv_k_to_c(double inTemp){
     return inTemp - 273.15;
 }
+
 double conv_k_to_f(double inTemp){
     return conv_c_to_f(conv_k_to_c(inTemp));
 }
