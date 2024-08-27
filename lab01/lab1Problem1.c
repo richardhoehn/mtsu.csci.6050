@@ -12,7 +12,6 @@ Desc:  This is a simple applicaiton that converts temperaturs K, C, F
 #include <stdio.h>
 #include <ctype.h>
 
-
 // Function Declarations
 double conv_c_to_f(double inTemp);
 double conv_c_to_k(double inTemp);
