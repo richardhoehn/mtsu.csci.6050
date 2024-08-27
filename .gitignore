@@ -1,4 +1,6 @@
+# Checkpoints
 .ipynb_checkpoints
+**/*.ipynb_checkpoints/
 
 # General
 .DS_Store
