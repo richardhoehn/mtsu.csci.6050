@@ -1,2 +1,2 @@
-# mtsu.csci.6050
+# MTSU CSCI 6050 Class
 CSCI 6050 - Computer Systems Fundamentals
