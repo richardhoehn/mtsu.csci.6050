@@ -1,38 +1,55 @@
-Script started on 2024-08-27 14:13:46-05:00 [TERM="xterm-256color" TTY="/dev/pts/1" COLUMNS="182" LINES="58"]
-[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab01[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab01[00m$ ls
-[?2004lLab1_Log.txt  lab1Problem1.c  [0m[01;32mlab1Problem1.out[0m
-[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab01[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab01[00m$ lsexit./test.out[1Plab.outgcc test.c -o test.out[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Klab1Problem1.c -o lab1Problem1.out 
+Script started on 2024-08-27 16:22:03-05:00 [TERM="xterm-256color" TTY="/dev/pts/1" COLUMNS="182" LINES="58"]
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab01[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab01[00m$ ls -la
+[?2004ltotal 84
+drwxr-sr-x 3 jovyan users  4096 Aug 27 16:22 [0m[01;34m.[0m
+drwxr-sr-x 4 jovyan users  4096 Aug 27 15:54 [01;34m..[0m
+drwxr-sr-x 2 jovyan users  4096 Aug 27 14:26 [01;34m.ipynb_checkpoints[0m
+-rw-r--r-- 1 jovyan users 47946 Aug 27 14:25 AI_Disclaimer.pdf
+-rw-r--r-- 1 jovyan users     0 Aug 27 16:22 Lab1_Log.txt
+-rw-r--r-- 1 jovyan users  3338 Aug 27 16:18 lab1Problem1.c
+-rwxr-xr-x 1 jovyan users 16488 Aug 27 16:21 [01;32mlab1Problem1.out[0m
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab01[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab01[00m$ gcc lab1Problem1.c -o .la[K[K/lab1Problem1.out
 [?2004l[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab01[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab01[00m$ ./lab1Problem1.out 
 [?2004lEnter starting temperature scale (F/C/K): f
-Enter target temperature scale (F/C/K): C
-Enter temperature value: 98
-98.00°F is equivalent to 36.67°C.
-[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab01[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab01[00m$ ./lab1Problem1.out 
-[?2004lEnter starting temperature scale (F/C/K): C c
-Enter target temperature scale (F/C/K): f
-Enter temperature value: 37 6.67
-36.67°C is equivalent to 98.01°F.
-[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab01[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab01[00m$ ./lab1Problem1.out 
-[?2004lEnter starting temperature scale (F/C/K): f F
-Enter target temperature scale (F/C/K): k
-Enter temperature value: 1 100
-100.00°F is equivalent to 310.93°K.
+Enter target temperature scale (F/C/K): c
+Enter temperature value: 100
+100.00°F is equivalent to 37.78°C.
 [?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab01[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab01[00m$ ./lab1Problem1.out 
 [?2004lEnter starting temperature scale (F/C/K): c
-Enter target temperature scale (F/C/K): K
-Enter temperature value: 40
-40.00°C is equivalent to 313.15°K.
+Enter target temperature scale (F/C/K): F
+Enter temperature value: 38
+38.00°C is equivalent to 100.40°F.
 [?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab01[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab01[00m$ ./lab1Problem1.out 
 [?2004lEnter starting temperature scale (F/C/K): K
+Enter target temperature scale (F/C/K): f
+Enter temperature value: 300  50.55
+350.55°K is equivalent to 171.32°F.
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab01[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab01[00m$ ./lab1Problem1.out 
+[?2004lEnter starting temperature scale (F/C/K): c
+Enter target temperature scale (F/C/K): k
+Enter temperature value: 300
+300.00°C is equivalent to 573.15°K.
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab01[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab01[00m$ ./lab1Problem1.out 
+[?2004lEnter starting temperature scale (F/C/K): k
+Enter target temperature scale (F/C/K): c
+Enter temperature value: 50
+50.00°K is equivalent to -223.15°C.
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab01[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab01[00m$ ./lab1Problem1.out 
+[?2004lEnter starting temperature scale (F/C/K): c
+Enter target temperature scale (F/C/K): F
+Enter temperature value: 45
+45.00°C is equivalent to 113.00°F.
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab01[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab01[00m$ ./lab1Problem1.out 
+[?2004lEnter starting temperature scale (F/C/K): k
 Enter target temperature scale (F/C/K): f
 Enter temperature value: 300
 300.00°K is equivalent to 80.33°F.
 [?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab01[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab01[00m$ ./lab1Problem1.out 
-[?2004lEnter starting temperature scale (F/C/K): K
-Enter target temperature scale (F/C/K): C
-Enter temperature value: 320
-320.00°K is equivalent to 46.85°C.
+[?2004lEnter starting temperature scale (F/C/K): F
+Enter target temperature scale (F/C/K): K
+Enter temperature value: 98.65555
+98.66°F is equivalent to 310.18°K.
 [?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab01[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab01[00m$ exit
 [?2004lexit
 
-Script done on 2024-08-27 14:16:08-05:00 [COMMAND_EXIT_CODE="0"]
+Script done on 2024-08-27 16:24:34-05:00 [COMMAND_EXIT_CODE="0"]

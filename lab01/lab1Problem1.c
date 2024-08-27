@@ -19,6 +19,8 @@ double conv_f_to_c(double inTemp);
 double conv_f_to_k(double inTemp);
 double conv_k_to_c(double inTemp);
 double conv_k_to_f(double inTemp);
+char getTempType(char* strPrompt);
+double getTempValue(char* strPrompt);
 
 // Start Program
 int main(){
@@ -29,27 +31,9 @@ int main(){
     double outTemp;
 
     // Start
-    printf("Enter starting temperature scale (F/C/K): ");
-    scanf("%c", &inType);
-
-    // Consume the newline character
-    while (getchar() != '\n');
-
-    printf("Enter target temperature scale (F/C/K): ");
-    scanf("%c", &outType);
-
-    // Consume the newline character
-    while (getchar() != '\n');
-
-    printf("Enter temperature value: ");
-    scanf("%lf", &inTemp);
-
-    // Consume the newline character
-    while (getchar() != '\n');
-
-    // To UpperCase()
-    inType = toupper(inType);
-    outType = toupper(outType);
+    inType = getTempType("Enter starting temperature scale (F/C/K): ");
+    outType = getTempType("Enter target temperature scale (F/C/K): ");
+    inTemp = getTempValue("Enter temperature value: ");
 
     switch(inType){
         case 'F':
@@ -92,14 +76,47 @@ int main(){
             }
             break;
         default:
-            outTemp = 8.88;
+            outTemp = 888.888; // Somthing Went Totally Wrong!!!
             break;
     }
     
     // Show Output
     printf("%.2lf°%c is equivalent to %.2lf°%c.\n", inTemp, inType, outTemp, outType);
-    
+
     return 0;
+}
+
+double getTempValue(char* strPrompt){
+    double tempValue;
+
+    printf("%s", strPrompt);
+    scanf("%lf", &tempValue);
+
+    // Clear the input /"Enter"
+    while (getchar() != '\n');
+
+    return tempValue;
+}
+
+char getTempType(char* strPrompt){
+    char tempType;
+
+    getTemp:
+        printf("%s", strPrompt);
+        scanf("%c", &tempType);
+    
+        // Clear the input /"Enter"
+        while (getchar() != '\n');
+    
+        // To UpperCase()
+        tempType = toupper(tempType);
+
+    if(tempType != 'C' && tempType != 'F' && tempType != 'K'){
+        printf("\nInput issue! Try Again!\n");
+        goto getTemp;
+    }
+
+    return tempType;
 }
 
 double conv_c_to_f(double inTemp){
