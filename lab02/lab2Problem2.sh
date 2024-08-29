@@ -19,3 +19,12 @@ echo ""
 
 echo ""
 ./lab2Problem2.out 20 5
+
+echo ""
+./lab2Problem2.out 10 8
+
+echo ""
+./lab2Problem2.out 21 5
+
+echo ""
+./lab2Problem2.out 5 21

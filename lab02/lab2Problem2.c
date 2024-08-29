@@ -15,14 +15,14 @@ Desc:  Permutation and Combination Output App
 #include <ctype.h>
 
 // Function Declarations
-int factorial(int n);
+long factorial(long n);
 
 // Start Program
 int main(int argc, char* argv[]){
     
     // Setup Varibales
-    int n;
-    int r; 
+    long n;
+    long r; 
     
     // Make Sure I got two (2) values!
     if(argc == 2){
@@ -35,15 +35,31 @@ int main(int argc, char* argv[]){
     // Get Args
     n = atoi(argv[1]); // Get "n"
     r = atoi(argv[2]); // Get "r"
+
+    // Check "n""
+    if(n < 1 || n > 20){
+        printf("\n");
+        printf("*** 'n' Input Incorrect! ***\n");
+        printf("\n");
+        return -1;
+    }
+
+    // Check "r"
+    if(r < 1 || r > 20){
+        printf("\n");
+        printf("*** 'r' Input Incorrect! ***\n");
+        printf("\n");
+        return -1;
+    }
  
-    printf("Fac 'n' = %d\n", factorial(n));
-    printf("Fac 'r' = %d\n", factorial(r));
+    printf("Fac 'n' %lu => %lu\n", n, factorial(n));
+    printf("Fac 'r' %lu => %lu\n", r, factorial(r));
 
     return 0;
 }
 
 
-int factorial(int n) {
+long factorial(long n) {
     int factorial = 1;
 
     // Simple loop over the factorial
