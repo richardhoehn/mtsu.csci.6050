@@ -1,0 +1,126 @@
+Script started on 2024-08-29 10:58:02-05:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="182" LINES="58"]
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab02[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab02[00m$ ls
+[?2004l AI_Disclaimer.pdf   Lab2_Log.txt  'Lab2_Loops&Functions.pdf'   lab2Problem1.c   [0m[01;32mlab2Problem1.sh[0m   lab2Problem2.c   [01;32mlab2Problem2.sh[0m
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab02[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab02[00m$ gcc lab2Problem1.c -o lab2Problem1
+[?2004l[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab02[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab02[00m$ ./lab2Problem1 9
+[?2004l9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 
+9 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 9 
+9 8 7 7 7 7 7 7 7 7 7 7 7 7 7 8 9 
+9 8 7 6 6 6 6 6 6 6 6 6 6 6 7 8 9 
+9 8 7 6 5 5 5 5 5 5 5 5 5 6 7 8 9 
+9 8 7 6 5 4 4 4 4 4 4 4 5 6 7 8 9 
+9 8 7 6 5 4 3 3 3 3 3 4 5 6 7 8 9 
+9 8 7 6 5 4 3 2 2 2 3 4 5 6 7 8 9 
+9 8 7 6 5 4 3 2 1 2 3 4 5 6 7 8 9 
+9 8 7 6 5 4 3 2 2 2 3 4 5 6 7 8 9 
+9 8 7 6 5 4 3 3 3 3 3 4 5 6 7 8 9 
+9 8 7 6 5 4 4 4 4 4 4 4 5 6 7 8 9 
+9 8 7 6 5 5 5 5 5 5 5 5 5 6 7 8 9 
+9 8 7 6 6 6 6 6 6 6 6 6 6 6 7 8 9 
+9 8 7 7 7 7 7 7 7 7 7 7 7 7 7 8 9 
+9 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 9 
+9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab02[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab02[00m$ ./lab2Problem1 9[K3
+[?2004l3 3 3 3 3 
+3 2 2 2 3 
+3 2 1 2 3 
+3 2 2 2 3 
+3 3 3 3 3 
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab02[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab02[00m$ ./lab2Problem1 3[K2
+[?2004l2 2 2 
+2 1 2 
+2 2 2 
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab02[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab02[00m$ ./lab2Problem1 2[K1
+[?2004l1 
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab02[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab02[00m$ ./lab2Problem1 1[K4
+[?2004l4 4 4 4 4 4 4 
+4 3 3 3 3 3 4 
+4 3 2 2 2 3 4 
+4 3 2 1 2 3 4 
+4 3 2 2 2 3 4 
+4 3 3 3 3 3 4 
+4 4 4 4 4 4 4 
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab02[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab02[00m$ ./lab2Problem1 4[K5
+[?2004l5 5 5 5 5 5 5 5 5 
+5 4 4 4 4 4 4 4 5 
+5 4 3 3 3 3 3 4 5 
+5 4 3 2 2 2 3 4 5 
+5 4 3 2 1 2 3 4 5 
+5 4 3 2 2 2 3 4 5 
+5 4 3 3 3 3 3 4 5 
+5 4 4 4 4 4 4 4 5 
+5 5 5 5 5 5 5 5 5 
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab02[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab02[00m$ ./lab2Problem1 5[K6
+[?2004l6 6 6 6 6 6 6 6 6 6 6 
+6 5 5 5 5 5 5 5 5 5 6 
+6 5 4 4 4 4 4 4 4 5 6 
+6 5 4 3 3 3 3 3 4 5 6 
+6 5 4 3 2 2 2 3 4 5 6 
+6 5 4 3 2 1 2 3 4 5 6 
+6 5 4 3 2 2 2 3 4 5 6 
+6 5 4 3 3 3 3 3 4 5 6 
+6 5 4 4 4 4 4 4 4 5 6 
+6 5 5 5 5 5 5 5 5 5 6 
+6 6 6 6 6 6 6 6 6 6 6 
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab02[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab02[00m$ ./lab2Problem1 6[K7
+[?2004l7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 6 6 6 6 6 6 6 6 6 6 6 7 
+7 6 5 5 5 5 5 5 5 5 5 6 7 
+7 6 5 4 4 4 4 4 4 4 5 6 7 
+7 6 5 4 3 3 3 3 3 4 5 6 7 
+7 6 5 4 3 2 2 2 3 4 5 6 7 
+7 6 5 4 3 2 1 2 3 4 5 6 7 
+7 6 5 4 3 2 2 2 3 4 5 6 7 
+7 6 5 4 3 3 3 3 3 4 5 6 7 
+7 6 5 4 4 4 4 4 4 4 5 6 7 
+7 6 5 5 5 5 5 5 5 5 5 6 7 
+7 6 6 6 6 6 6 6 6 6 6 6 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab02[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab02[00m$ ./lab2Problem1 7[K8
+[?2004l8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+8 7 7 7 7 7 7 7 7 7 7 7 7 7 8 
+8 7 6 6 6 6 6 6 6 6 6 6 6 7 8 
+8 7 6 5 5 5 5 5 5 5 5 5 6 7 8 
+8 7 6 5 4 4 4 4 4 4 4 5 6 7 8 
+8 7 6 5 4 3 3 3 3 3 4 5 6 7 8 
+8 7 6 5 4 3 2 2 2 3 4 5 6 7 8 
+8 7 6 5 4 3 2 1 2 3 4 5 6 7 8 
+8 7 6 5 4 3 2 2 2 3 4 5 6 7 8 
+8 7 6 5 4 3 3 3 3 3 4 5 6 7 8 
+8 7 6 5 4 4 4 4 4 4 4 5 6 7 8 
+8 7 6 5 5 5 5 5 5 5 5 5 6 7 8 
+8 7 6 6 6 6 6 6 6 6 6 6 6 7 8 
+8 7 7 7 7 7 7 7 7 7 7 7 7 7 8 
+8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab02[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab02[00m$ gcc lab2Problem2.c -o lab2Problem2
+[?2004l[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab02[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab02[00m$ ./lab2Problem2 20 19
+[?2004lP(20,19) = 2432902008176640000
+C(20,19) = 20
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab02[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab02[00m$ ./lab2Problem2 20 19[K[K[K[K[K10 3
+[?2004lP(10,3) = 720
+C(10,3) = 120
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab02[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab02[00m$ ./lab2Problem2 10 3[K[K[K[K1 1
+[?2004lP(1,1) = 1
+C(1,1) = 1
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab02[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab02[00m$ ./lab2Problem2 1 1[K2
+[?2004l
+Error: r should be less than or equal to n
+
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab02[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab02[00m$ ./lab2Problem2 1 21
+[?2004l
+*** Input of 'r' Incorrect! ***
+
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab02[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab02[00m$ ./lab2Problem2 1 21[1P 210 21
+[?2004l
+*** Input of 'n' Incorrect! ***
+
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab02[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab02[00m$ ./lab2Problem2 0 21[K[K[K[K5 5
+[?2004lP(5,5) = 120
+C(5,5) = 1
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab02[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab02[00m$ ./lab2Problem2 5 5[K3
+[?2004lP(5,3) = 60
+C(5,3) = 10
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab02[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab02[00m$ exit
+[?2004lexit
+
+Script done on 2024-08-29 11:00:38-05:00 [COMMAND_EXIT_CODE="0"]
