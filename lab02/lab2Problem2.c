@@ -22,9 +22,9 @@ int main(int argc, char* argv[]){
     // Setup Varibales
     long n; // Using "long" due to factorial size
     long r; // Using "long" due to factorial size
-    
-    // Make Sure I got two (2) valdes!
-    if(argc == 2){
+
+    // Make Sure I got two (2) values!
+    if(argc != 3){
         printf("\n");
         printf("*** Missing Correct Argument Count of 2! ***\n");
         printf("\n");
