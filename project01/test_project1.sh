@@ -12,3 +12,6 @@ echo ""
 
 ./project1 test2.txt
 echo ""
+
+./project1 project1.c
+echo ""
