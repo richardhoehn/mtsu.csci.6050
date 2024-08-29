@@ -46,12 +46,18 @@ int main(int argc, char* argv[]){
         return 1;
     }
 
-    while(fread(buffer, 16, 1, file) != 0){
+    // Loop
+    int readSize;
+    while(!feof(file)){
+     
+        readSize = (int)fread(buffer, 1, 16, file);
+
+        if(readSize == 0){break;}
         
         printf("%08x: ", fileCharCount);
-        fileCharCount = fileCharCount + 16;
+        fileCharCount = fileCharCount + readSize;
 
-        for(int i=0; i < 16; i++)
+        for(int i=0; i < readSize; i++)
         {
             printf("%02x%02x ", buffer[i], buffer[i+1]);
             i = i + 1;
@@ -61,7 +67,7 @@ int main(int argc, char* argv[]){
         // Spacer
         printf(" ");
         
-        for(int j = 0; j < 16; j++)
+        for(int j = 0; j < readSize; j++)
         {
             if(isprint(buffer[j]))
                 printf("%c", buffer[j]);

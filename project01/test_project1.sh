@@ -10,4 +10,5 @@ echo ""
 echo ""
 
 
-./project1 project1.c
+./project1 test2.txt
+echo ""
