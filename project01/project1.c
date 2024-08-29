@@ -21,9 +21,8 @@ int main(int argc, char* argv[]){
     FILE * file;
     char fileChar;
     int  fileCharCount = 0;
-    char hexCharArr[16];
-    char strCharArr[16];
-    unsigned char buffer[17];
+    unsigned char buffer[16];
+    int readBufferSize;
     
 
     // Make Sure I got a Filename
@@ -47,27 +46,42 @@ int main(int argc, char* argv[]){
     }
 
     // Loop
-    int readSize;
     while(!feof(file)){
-     
-        readSize = (int)fread(buffer, 1, 16, file);
 
-        if(readSize == 0){break;}
-        
+        // Read (try) 16 chars into the buffer. 
+        // I get the size read so I can keep track of how to display
+        readBufferSize = (int)fread(buffer, 1, 16, file);
+
+        // Exit out if we did not read anything!
+        if(readBufferSize == 0){break;}
+
+        // Print the Char read count
         printf("%08x: ", fileCharCount);
-        fileCharCount = fileCharCount + readSize;
+        fileCharCount = fileCharCount + readBufferSize;
 
-        for(int i=0; i < readSize; i++)
+        // Loop over the Read Buffer!
+        for(int i=0; i < readBufferSize; i++)
         {
-            printf("%02x%02x ", buffer[i], buffer[i+1]);
-            i = i + 1;
+            printf("%02x", buffer[i]);
+            if(i != 0 && (i % 2) == 1){
+                printf(" ");
+            }
             
         }
+
+        // Expand spacing if the Buffer is less than 16
+        for(int i=readBufferSize; i < 16; i++){
+            printf("  ");
+            if(i != 0 && (i % 2) == 1){
+                printf(" ");
+            }
+        }
+        
 
         // Spacer
         printf(" ");
         
-        for(int j = 0; j < readSize; j++)
+        for(int j = 0; j < readBufferSize; j++)
         {
             if(isprint(buffer[j]))
                 printf("%c", buffer[j]);
