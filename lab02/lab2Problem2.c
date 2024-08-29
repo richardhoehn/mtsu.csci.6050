@@ -30,11 +30,11 @@ int main(int argc, char* argv[]){
         return -1;
     }
 
-    // Get Args
-    n = atoi(argv[1]); // Get "n"
-    r = atoi(argv[2]); // Get "r"
+    // Get Args - Index based
+    n = atoi(argv[1]); // Get "n" - Convert to an Integer
+    r = atoi(argv[2]); // Get "r" - Convert to an Integer
 
-    // Check "n""
+    // Check "n" - Bounds and if Digit
     if(n < 1 || n > 20){
         printf("\n");
         printf("*** Input of 'n' Incorrect! ***\n");
@@ -42,7 +42,7 @@ int main(int argc, char* argv[]){
         return -1;
     }
 
-    // Check "r"
+    // Check "r" - Bounds and if Digit
     if(r < 1 || r > 20){
         printf("\n");
         printf("*** Input of 'r' Incorrect! ***\n");
@@ -50,6 +50,7 @@ int main(int argc, char* argv[]){
         return -1;
     }
 
+    // Make sure "r" is larger than "n"
     if(r > n){
         printf("\n");
         printf("Error: r should be less than or equal to n\n");

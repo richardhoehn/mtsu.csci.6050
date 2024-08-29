@@ -11,8 +11,6 @@ Desc:  Print a Decending and Acending Cube
 
 // Setup Includes & Libs
 #include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
 
 
 // Start Program
@@ -28,10 +26,10 @@ int main(int argc, char* argv[]){
         return -1;
     }
 
-    // Set Iterator
+    // Set Iterator by getting argument
     iterator = atoi(argv[1]);
 
-    // Check for Number
+    // Check for Number & Bounds of Number
     if(iterator < 1 || iterator > 9){
         printf("\n");
         printf("*** Input Incorrect! ***\n");
@@ -51,18 +49,18 @@ int main(int argc, char* argv[]){
         // Loop the Layer - It increments as we move down!
         for (int i = layer; i < size - layer; i++) {
 
-            int mirror = size - layer - 1;
-            int val = iterator - layer;
+            int mirror = size - layer - 1; // Set Mirro location on matrix
+            int val = iterator - layer; // Set the value to be wrtten
 
-            matrix[layer][i] = val;   // Top row
-            matrix[mirror][i] = val;  // Bottom row
+            matrix[layer][i]  = val;  // Top row looping the columns
+            matrix[mirror][i] = val;  // Bottom row looping the columns
 
-            matrix[i][layer]  = val;  // Left column
-            matrix[i][mirror] = val;  // Right column
+            matrix[i][layer]  = val;  // Left column - Quadratn Write
+            matrix[i][mirror] = val;  // Right column - Quadrant Write
         }
     }
 
-    // Print the matrix
+    // Print the matrix - Loop over "i" and "j"
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++) {
             printf("%d ", matrix[i][j]);
