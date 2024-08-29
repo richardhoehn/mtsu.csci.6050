@@ -2,10 +2,12 @@
 
 gcc ./project1.c -o project1
 
-./project1 test.txt
-echo ""
+./project1 no.txt
 echo ""
 
-./project1 project.c
+
+./project1 test.txt
 echo ""
-echo ""
+
+
+./project1 project1.c
