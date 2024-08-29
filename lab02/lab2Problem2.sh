@@ -34,6 +34,10 @@ echo "Should be = 30,240, 252"
 ./lab2Problem2.out 10 5
 echo ""
 
+echo "Should be = 60 - 10"
+./lab2Problem2.out 5 3
+echo ""
+
 echo "Should be 2,432,902,008,176,640,000, 1"
 ./lab2Problem2.out 20 20
 echo ""

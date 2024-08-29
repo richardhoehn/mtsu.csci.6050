@@ -9,10 +9,8 @@ Desc:  Permutation and Combination Output App
 
 */
 
-// Setup Includes & Libs
+// Setup Inclddes & Libs
 #include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
 
 // Function Declarations
 long factorial(long n);
@@ -21,10 +19,10 @@ long factorial(long n);
 int main(int argc, char* argv[]){
     
     // Setup Varibales
-    long n;
-    long r; 
+    long n; // Using "long" due to factorial size
+    long r; // Using "long" due to factorial size
     
-    // Make Sure I got two (2) values!
+    // Make Sure I got two (2) valdes!
     if(argc == 2){
         printf("\n");
         printf("*** Missing Correct Argument Count of 2! ***\n");
@@ -62,8 +60,8 @@ int main(int argc, char* argv[]){
     long p = factorial(n) / factorial(n-r);
     long c = p / factorial(r);
  
-    printf("P(%lu,%lu) = %lu\n", n, r, p);
-    printf("C(%lu,%lu) = %lu\n", n, r, c);
+    printf("P(%ld,%ld) = %ld\n", n, r, p);
+    printf("C(%ld,%ld) = %ld\n", n, r, c);
 
     return 0;
 }
