@@ -39,7 +39,7 @@ int main(int argc, char* argv[]){
     // Check "n""
     if(n < 1 || n > 20){
         printf("\n");
-        printf("*** 'n' Input Incorrect! ***\n");
+        printf("*** Input of 'n' Incorrect! ***\n");
         printf("\n");
         return -1;
     }
@@ -47,22 +47,32 @@ int main(int argc, char* argv[]){
     // Check "r"
     if(r < 1 || r > 20){
         printf("\n");
-        printf("*** 'r' Input Incorrect! ***\n");
+        printf("*** Input of 'r' Incorrect! ***\n");
         printf("\n");
         return -1;
     }
+
+    if(r > n){
+        printf("\n");
+        printf("Error: r should be less than or equal to n\n");
+        printf("\n");
+        return -1;
+    }
+
+    long p = factorial(n) / factorial(n-r);
+    long c = p / factorial(r);
  
-    printf("Fac 'n' %lu => %lu\n", n, factorial(n));
-    printf("Fac 'r' %lu => %lu\n", r, factorial(r));
+    printf("P(%lu,%lu) = %lu\n", n, r, p);
+    printf("C(%lu,%lu) = %lu\n", n, r, c);
 
     return 0;
 }
 
 
 long factorial(long n) {
-    int factorial = 1;
+    long factorial = 1;
 
-    // Simple loop over the factorial
+    // Simple loop over the factorial - it gets big quick!
     for (int i = 1; i <= n; i++) {
         factorial *= i;
     }
