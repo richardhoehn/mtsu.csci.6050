@@ -11,6 +11,7 @@ Desc:  Print a Decending and Acending Cube
 
 // Setup Includes & Libs
 #include <stdio.h>
+#include <stdlib.h>
 
 
 // Start Program

@@ -11,6 +11,7 @@ Desc:  Permutation and Combination Output App
 
 // Setup Inclddes & Libs
 #include <stdio.h>
+#include <stdlib.h>
 
 // Function Declarations
 long factorial(long n);
