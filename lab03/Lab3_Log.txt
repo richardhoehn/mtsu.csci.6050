@@ -1,0 +1,30 @@
+Script started on 2024-09-05 21:51:46-05:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="222" LINES="91"]
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab03[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab03[00m$ ls
+[?2004l AI_Disclaimer.pdf  'Lab3_Arrays&Strings.pdf'   Lab3_Log.txt   lab3Problem1.c   [0m[01;32mlab3Problem1.sh[0m   lab3Problem2.c   [01;32mlab3Problem2.sh[0m
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab03[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab03[00m$ gcc lab3Problem1.c -o lab3Problem1
+[?2004l[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab03[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab03[00m$ ./lab3Problem1
+[?2004l4
+1 2 3 4
+4 3 2 1 
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab03[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab03[00m$ ./lab3Problem1
+[?2004l5
+23 43 1 66 12345
+12345 66 1 43 23 
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab03[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab03[00m$ gcc lab3Problem2.c -o lab3Problem2
+[?2004l[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab03[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab03[00m$ ./labe[K3Problem2
+[?2004lEnter a line of text: A quick ivory unicorn jumps over the lazy elephant
+Words starting with vowels:
+A
+ELEPHANT
+IVORY
+OVER
+UNICORN
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab03[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab03[00m$ ./lab3Problem2
+[?2004lEnter a line of text: Hello My so a nice world. How are you so good
+Words starting with vowels:
+A
+ARE
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab03[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab03[00m$ exit
+[?2004lexit
+
+Script done on 2024-09-05 21:54:55-05:00 [COMMAND_EXIT_CODE="0"]
