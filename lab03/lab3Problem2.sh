@@ -9,3 +9,7 @@ EOF
 ./lab3Problem2 << EOF
 A quick ivory unicorn jumps over the lazy elephant
 EOF
+
+./lab3Problem2 << EOF
+A quick ivory unicorn jumps over the lazy elephant.
+EOF

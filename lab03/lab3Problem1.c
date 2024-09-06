@@ -27,11 +27,7 @@ int main()
 
     //TODO: Write the logic to reverse the array "arr" here
 
-    // START - Here
-    int half; // Get half the array!
-    half = n / 2; // Get half the array!
-
-    for(i = 0; i < half; i++) {
+    for(i = 0; i < (n / 2); i++) {
         int temp;
         temp = arr[i];
         arr[i] = arr[n-i-1];
