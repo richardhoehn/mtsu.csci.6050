@@ -4,7 +4,7 @@ Name:  Richard Hoehn
 Class: CSCI-6050
 Lab:   03
 Prob:  02
-Date:  2024-09-05
+Date:  2024-09-06
 Desc:  Sort And Determine Vovels
 
 */
