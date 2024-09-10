@@ -3,9 +3,9 @@
 Name:  Richard Hoehn
 Class: CSCI-6050
 Lab:   04
-Prob:  01
+Prob:  02
 Date:  2024-09-10
-Desc:  Readinga File and Output Chars
+Desc:  Checkig Username and Password
 
 */
 
@@ -15,57 +15,68 @@ Desc:  Readinga File and Output Chars
 #include <string.h>
 
 // Setup Defines
-#define MAX_LETTERS 256
-
-
-
+#define MAX_LETTERS 128
+#define USERDATA "userdata.txt"
 
 // Start Application
-int main(int argc, char* argv[]){
+int main(int argc, char *argv[])
+{
 
     // Set Variables
     char username[MAX_LETTERS];
     char password[MAX_LETTERS];
 
     FILE *fp;
-    char *filename = "userdata.txt";
+    char *filename = USERDATA;
+    char line[MAX_LETTERS + MAX_LETTERS + MAX_LETTERS]; // Made it 3x the size of the Letters Max
+    const char delim[] = " ";                           // Set the delimiter
+    char *word;                                         // Temp Word holder
+    int cmpRes;
+    int found = 0;
 
     // Make user Userdata File is Avaiable!
     fp = fopen(filename, "r");
-    if (fp == NULL) {
+    if (fp == NULL)
+    {
         printf("Userdata File Missing!\n");
         return 1;
     }
 
-    // Ask user to give us a sentence!
+    // Ask user to give username and password
     printf("Username: ");
-    if (fgets(username, sizeof(username), stdin) == NULL) {
-        printf("Error reading input.\n");
-        return 1;
-    }
+    scanf("%s", username);
 
     printf("Password: ");
-    if (fgets(password, sizeof(password), stdin) == NULL) {
-        printf("Error reading input.\n");
-        return 1;
+    scanf("%s", password);
+
+    // Iterate of Userdata to Find User and Pwd
+    while (fgets(line, sizeof(line), fp))
+    {
+        // Get Username from Line
+        word = strtok(line, delim);
+        cmpRes = strcmp(username, word);
+        if (cmpRes != 0)
+        {
+            continue;
+        }
+
+        // Get Password from Line
+        word = strtok(NULL, delim);
+        cmpRes = strcmp(password, word);
+        if (cmpRes != 0)
+        {
+            continue;
+        }
+
+        // Get Value
+        word = strtok(NULL, delim);
+        printf("The amount is: %s", word);
+        found = 1;
     }
 
-    // Check input Length
-    if(strlen(username) < 2){
-        printf("No Username provided!\n");
-        return 1;
+    if(found == 0){
+        printf("username/password missmatch!!!\n");
     }
-     if(strlen(password) < 2){
-        printf("No Password provided!\n");
-        return 1;
-    }
-
-    
-
-
-    printf("Size %lu\n", strlen(username));
-
-    //printf("Username & Password: %c-%c", username, password);
 
     // Close Userdata File
     fclose(fp);
