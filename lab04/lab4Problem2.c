@@ -29,8 +29,6 @@ int main(int argc, char *argv[])
     FILE *fp;
     char *filename = USERDATA;
     char line[MAX_LETTERS + MAX_LETTERS + MAX_LETTERS]; // Made it 3x the size of the Letters Max
-    const char delim[] = " ";                           // Set the delimiter
-    char *word;                                         // Temp Word holder
     int cmpRes;
     int found = 0;
 
@@ -49,28 +47,32 @@ int main(int argc, char *argv[])
     printf("Password: ");
     scanf("%s", password);
 
+    char u[MAX_LETTERS];
+    char p[MAX_LETTERS];
+    float v;
+
     // Iterate of Userdata to Find User and Pwd
     while (fgets(line, sizeof(line), fp))
     {
+        // Get U, P, and V
+        sscanf(line, "%s %s %f", u, p, &v);
+
         // Get Username from Line
-        word = strtok(line, delim);
-        cmpRes = strcmp(username, word);
+        cmpRes = strcmp(username, u);
         if (cmpRes != 0)
         {
             continue;
         }
 
         // Get Password from Line
-        word = strtok(NULL, delim);
-        cmpRes = strcmp(password, word);
+        cmpRes = strcmp(password, p);
         if (cmpRes != 0)
         {
             continue;
         }
 
         // Get Value
-        word = strtok(NULL, delim);
-        printf("The amount is: %s", word);
+        printf("The amount is: %.2f\n", v);
         found = 1;
     }
 
