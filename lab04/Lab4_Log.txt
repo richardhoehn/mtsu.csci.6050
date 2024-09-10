@@ -1,0 +1,55 @@
+Script started on 2024-09-10 13:45:12-05:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="163" LINES="58"]
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab04[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab04[00m$ ls
+[?2004lLab4_FileHandling.pdf  Lab4_Log.txt  lab4Problem1.c  [0m[01;32mlab4Problem1.sh[0m  lab4Problem2.c  [01;32mlab4Problem2.sh[0m  sample.txt  sample2.txt  userdata.txt
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab04[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab04[00m$ gcc lab4Problem1.c -o lab4Problem1
+[?2004l[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab04[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab04[00m$ ./lab4Problem1 sample.txt
+[?2004lThis is an
+ example t
+ext..This 
+is another
+ line.
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab04[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab04[00m$ ./labe[K4Problem1 sample2.txt
+[?2004lThis is an
+ example t
+ext..This 
+is another
+ line..123
+4567890123
+45
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab04[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab04[00m$ ./lab4Problem1 userdata.txt
+[?2004luser1 pass
+word1 7500
+0.00.user2
+ password2
+ 45950.75.
+user3 pass
+word3 6523
+0.75.user4
+ password4
+ 55550.75.
+user5 pass
+word5 9525
+5.75.user6
+ password6
+ 35255.75.
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab04[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab04[00m$ gcc lab4Problem2.c -o lab4Problem2
+[?2004l[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab04[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab04[00m$ ./lab4Problem2
+[?2004lUsername: user2
+Password: password2
+The amount is: 45950.75
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab04[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab04[00m$ ./lab4Problem2
+[?2004lUsername: uuuu
+Password: pppp
+username/password missmatch!!!
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab04[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab04[00m$ ./lab4Problem2
+[?2004lUsername: user1
+Password: password2
+username/password missmatch!!!
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab04[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab04[00m$ ./lab4Problem2
+[?2004lUsername: user1
+Password: passw word1
+The amount is: 75000.00
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab04[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab04[00m$ exit
+[?2004lexit
+
+Script done on 2024-09-10 13:47:47-05:00 [COMMAND_EXIT_CODE="0"]
