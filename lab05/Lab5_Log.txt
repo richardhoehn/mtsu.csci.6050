@@ -1,0 +1,14 @@
+Script started on 2024-09-24 13:35:34-05:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="163" LINES="58"]
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab05[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab05[00m$ ls
+[?2004lAI_Disclaimer.pdf  Lab5-StructuresI.pdf  Lab5_Log.txt  lab5Problem1.c  [0m[01;32mlab5Problem1.sh[0m  student.csv
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab05[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab05[00m$ gcc lab5Problem1.c -o lab5Problem1
+[?2004l[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab05[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab05[00m$ ./lab5Problem1
+[?2004lBon Jovi 345621 60.00
+John Doe 123456 60.00
+Bruce Wayne 100000 79.30
+Charles Babbage 121791 99.90
+Ada Lovelace 121915 100.00
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab05[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab05[00m$ exit
+[?2004lexit
+
+Script done on 2024-09-24 13:36:26-05:00 [COMMAND_EXIT_CODE="0"]
