@@ -135,6 +135,7 @@ char *searchBySalary(Struct_Employee_Info employees[], int count, int salary, co
         // Create a copy of the Empoyee - Makes Code a bit easier
         Struct_Employee_Info e = employees[i];
 
+        // Based on the Comparrison we will get a "0" or "1"
         if (comparison(e.salary, salary))
         {
             // Set "found" flag to true
