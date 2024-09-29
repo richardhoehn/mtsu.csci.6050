@@ -1,0 +1,24 @@
+Script started on 2024-09-29 16:58:52-05:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="196" LINES="91"]
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab06[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab06[00m$ ls
+[?2004lLab6-StructureII.pdf  Lab6_Log.txt  lab6Problem1.c  [0m[01;32mlab6Problem1.sh[0m  records.csv
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab06[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab06[00m$ gcc lab6Problem1.c -o lab6Problem1
+[?2004l[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab06[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab06[00m$ ./lab6Problem1
+[?2004l
+Search Results by Name: Jack Sparrow
+Name: Jack Sparrow	Zip code: 07801	Department: Movies	Salary: 40000
+
+Search Results by Zip Code: 37128
+Name: Pablo Picasso	Zip code: 37128	Department: Arts	Salary: 65000
+Name: Charles Babbage	Zip code: 37128	Department: Computer Science	Salary: 55000
+
+Search Results by Salary: >= 45000
+Name: Pablo Picasso	Zip code: 37128	Department: Arts	Salary: 65000
+Name: Jackie Chan	Zip code: 12345	Department: Martial Arts	Salary: 50000
+Name: Charles Babbage	Zip code: 37128	Department: Computer Science	Salary: 55000
+
+Search Results by Salary: == 500000
+No matching records found.
+[?2004h(base) ]0;jovyan@jupyter-rhoehn: ~/mtsu.csci.6050/lab06[01;32mjovyan@jupyter-rhoehn[00m:[01;34m~/mtsu.csci.6050/lab06[00m$ exit
+[?2004lexit
+
+Script done on 2024-09-29 16:59:30-05:00 [COMMAND_EXIT_CODE="0"]
