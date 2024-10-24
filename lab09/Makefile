@@ -3,9 +3,8 @@
 # When: 2024-10-24
 
 # Compiler and flags
-CC=gcc
-CFLAGS=-g -O1 -Wall
-LDLIBS=-lpthread
+CC = gcc
+CFLAGS = -Wall
 
 # Target executables
 TARGETS = server client
@@ -16,20 +15,16 @@ SOURCES = server.c client.c csapp.c
 # Object files
 OBJS = $(SOURCES:.c=.o)
 
-
 # All: build both executables
 all: $(TARGETS)
 
-
-# Build Server executable
+# Build server executable
 server: server.o csapp.o
 	$(CC) -o server server.o csapp.o
 
-
-# Build Client executable
+# Build client executable
 client: client.o csapp.o
 	$(CC) -o client client.o csapp.o
-
 
 # Clean: remove object files and executables
 clean:
