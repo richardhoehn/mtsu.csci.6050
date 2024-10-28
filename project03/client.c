@@ -18,13 +18,15 @@ Desc:  Client App
 #include "csapp.h"
 
 // Function Declarations
+int isNumber(const char *str);
 void printStars(int);
-void printError(char *);
+void printError(const char *);
 int promptMenuSelect(void);
 char *promptLine(char *);
 int promptLineInt(char *);
 char *promptLineStr(char *);
 int promptLineOps(char *);
+void sendPayload(int, char *);
 
 // Constants
 const int MAX_INPUT_LENGTH = 100;
@@ -37,7 +39,7 @@ Func: Main App Loop
 int main(int argc, char *argv[])
 {
     // Set Variables
-    int clientfd;      // File Descriptor to communicate with the server
+    int clientFd;      // File Descriptor to communicate with the server
     char *host, *port; // String of Port & Host
     size_t n;
 
@@ -55,6 +57,17 @@ int main(int argc, char *argv[])
     // Set host & Port for Connections
     host = argv[1];
     port = argv[2];
+
+    // Validate port as a number
+    if (!isNumber(port)) {
+        printError("Port must be a valid number.");
+        exit(1);
+    }
+
+    clientFd = Open_clientfd(host, port); // wrapper function that calls getadderinfo, socket and connect functions for client side
+
+    // Resetting the Buffer!
+    bzero(buffer, MAXLINE);
 
     while (1)
     {
@@ -77,7 +90,8 @@ int main(int argc, char *argv[])
             department = promptLineStr("Enter Department:");
             salary = promptLineInt("Enter Salary:");
             sprintf(payload, "1,%s,%s,%s,%d", firstName, lastName, department, salary);
-            printf("Payload: %s", payload);
+            printf("Payload: %s\n", payload);
+            sendPayload(clientFd, payload);
         }
 
         // Search By Name
@@ -86,7 +100,8 @@ int main(int argc, char *argv[])
             firstName = promptLineStr("Enter first name:");
             lastName = promptLineStr("Enter last name:");
             sprintf(payload, "2,%s,%s", firstName, lastName);
-            printf("Payload: %s", payload);
+            printf("Payload: %s\n", payload);
+            sendPayload(clientFd, payload);
         }
 
         // Search by Zip Code
@@ -94,7 +109,8 @@ int main(int argc, char *argv[])
         {
             zipCode = promptLineStr("Enter Zip Code:");
             sprintf(payload, "3,%s", zipCode);
-            printf("Payload: %s", payload);
+            printf("Payload: %s\n", payload);
+            sendPayload(clientFd, payload);
         }
 
         // Search by Salary
@@ -104,26 +120,75 @@ int main(int argc, char *argv[])
             printf("Salary: %d\n", salary);
             op = promptLineOps("Enter Comparision Type ['>','<','==','>=','<=']:");
             sprintf(payload, "4,%d,%d", salary, op);
-            printf("Payload: %s", payload);
+            printf("Payload: %s\n", payload);
+            sendPayload(clientFd, payload);
         }
 
         // Free Vars - Potential Memory Leak
-            free(firstName);
-            free(lastName);
-            free(department);
-            free(zipCode);
+
+        free(firstName);
+        free(lastName);
+        free(department);
+        free(zipCode);
 
         // Terminate
         if (sel == 5)
         {
+            sprintf(payload, "5");
+            printf("Payload: %s\n", payload);
+            sendPayload(clientFd, payload);
             break;
         }
     }
 
     // Close Server Connection
-    Close(clientfd);
+    Close(clientFd);
 
     return 0;
+}
+
+
+void sendPayload(int fd, char * payload)
+{
+    char buffer[MAXLINE]; // MAXLINE = 8192 defined in csapp.h
+
+    // sending the message received from the user to the server
+    int n = write(fd, payload, strlen(payload));
+    if (n < 0)
+    {
+        perror("Write Error!!");
+        return;
+    }
+
+    // waiting for the message from the server.
+    // the message will be stored in buffer variable.
+    n = read(fd, buffer, MAXLINE);
+    if (n < 0)
+    {
+        perror("Read Error!!");
+        return;
+    }
+
+    printf("Message from Server:\n");
+    // displaying the message in buffer on the console
+    Fputs(buffer, stdout);
+}
+
+
+/* -----------------------------------------------------------------------
+Func: isNumber()
+What: This function check if the string is a number
+In:   String
+Out:  Int
+----------------------------------------------------------------------- */
+int isNumber(const char *str) {
+    // Check if each character in the string is a digit
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (!isdigit((unsigned char)str[i])) {
+            return 0;  // Return 0 if any character is not a digit
+        }
+    }
+    return 1;  // Return 1 if all characters are digits
 }
 
 /* -----------------------------------------------------------------------
@@ -137,15 +202,7 @@ int promptLineInt(char *prompt)
     char *out = promptLine(prompt); // Allocate memory for user input
 
     // Check if the input string is a valid integer
-    int is_valid = 1;
-    for (int i = 0; i < strlen(out); i++)
-    {
-        if (!isdigit(out[i]))
-        {
-            is_valid = 0;
-            break;
-        }
-    }
+    int is_valid = isNumber(out);
 
     if (is_valid)
     {
@@ -274,7 +331,7 @@ What: This function prints an error message based on input
 In:   char array
 Out:  void
 ----------------------------------------------------------------------- */
-void printError(char *strError)
+void printError(const char *strError)
 {
     printf("\n");
     printStars(strlen(strError) + 8);
@@ -308,9 +365,9 @@ int promptMenuSelect(void)
         {
             printError("Invalid input! Please enter a number.");
 
-            // // Clear the Buffer!
-            // while (getchar() != '\n')
-            //     ;
+            // Clear the Buffer!
+            while (getchar() != '\n')
+                ;
             continue;
         }
 
