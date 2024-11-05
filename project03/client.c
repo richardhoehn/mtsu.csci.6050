@@ -80,17 +80,17 @@ int main(int argc, char *argv[])
         char *department = NULL;
         char *zipCode = NULL;
         int salary;
-        int op;
+        int opIdx;
 
         // Add Record
         if (sel == 1)
         {
             firstName = promptLineStr("Enter first name:");
             lastName = promptLineStr("Enter last name:");
+            zipCode = promptLineStr("Enter Zip Code:");
             department = promptLineStr("Enter Department:");
             salary = promptLineInt("Enter Salary:");
-            sprintf(payload, "1,%s,%s,%s,%d", firstName, lastName, department, salary);
-            printf("Payload: %s\n", payload);
+            sprintf(payload, "1,%s,%s,%s,%s,%d", firstName, lastName, zipCode, department, salary);
             sendPayload(clientFd, payload);
         }
 
@@ -109,7 +109,6 @@ int main(int argc, char *argv[])
         {
             zipCode = promptLineStr("Enter Zip Code:");
             sprintf(payload, "3,%s", zipCode);
-            printf("Payload: %s\n", payload);
             sendPayload(clientFd, payload);
         }
 
@@ -118,9 +117,8 @@ int main(int argc, char *argv[])
         {
             salary = promptLineInt("Enter Salary:");
             printf("Salary: %d\n", salary);
-            op = promptLineOps("Enter Comparision Type ['>','<','==','>=','<=']:");
-            sprintf(payload, "4,%d,%d", salary, op);
-            printf("Payload: %s\n", payload);
+            opIdx = promptLineOps("Enter Comparision Type ['>','<','==','>=','<=']:");
+            sprintf(payload, "4,%d,%s", salary, VALID_OPS[opIdx]);
             sendPayload(clientFd, payload);
         }
 
@@ -151,6 +149,7 @@ int main(int argc, char *argv[])
 void sendPayload(int fd, char * payload)
 {
     char buffer[MAXLINE]; // MAXLINE = 8192 defined in csapp.h
+    memset(buffer, 0, sizeof(buffer)); // Clear the buffer by setting all bytes to '\0'
 
     // sending the message received from the user to the server
     int n = write(fd, payload, strlen(payload));

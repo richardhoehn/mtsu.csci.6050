@@ -19,6 +19,7 @@ Desc:  Server App
 
 #define MAX_SIZE 1000
 #define MAX_LENGTH 25
+#define FILENAME "records.csv"
 
 typedef struct
 {
@@ -28,13 +29,141 @@ typedef struct
     char department[MAX_LENGTH];
     int salary;
 
-} Struct_Employee_Info;
+} Employee;
 
 // Function Declarations
 char *serverRead(int);
 void serverWrite(int, char *);
 void printStars(int);
 void printError(const char *);
+int updateEmployees(Employee employees[]);
+void appendToFile(char *);
+
+// Creating Definition Functions for the Operators!
+int greater_than(int a, int b) { return a > b; }
+int less_than(int a, int b) { return a < b; }
+int greater_than_or_equal(int a, int b) { return a >= b; }
+int less_than_or_equal(int a, int b) { return a <= b; }
+int equal(int a, int b) { return a == b; }
+
+// With this special Funciotn we are mapping based on the comparison operator string
+// Note: This is a pointer coming back from the function to the definition
+int (*get_comp_func(const char *operator))(int, int) {
+    if (strcmp(operator, ">") == 0) { return &greater_than; }
+    if (strcmp(operator, "<") == 0) { return &less_than; }
+    if (strcmp(operator, ">=") == 0) { return &greater_than_or_equal; }
+    if (strcmp(operator, "<=") == 0) { return &less_than_or_equal; }
+    if (strcmp(operator, "==") == 0) { return &equal; }
+    return NULL; // Return NULL if operator is invalid
+}
+
+// Function to append employee info into the result buffer using snprintf
+void append_employee_info(char *result, Employee e) {
+    snprintf(
+        result + strlen(result),   // Set the location to start writting
+        MAX_SIZE - strlen(result), // Max Length to stop
+        "%s,%s,%s,%s,%d\n",        // Formatted String
+        e.firstName,
+        e.lastName,
+        e.zipCode,
+        e.department,
+        e.salary);
+}
+
+char *searchByName(Employee employees[], int count, const char *firstName, const char *lastName) {
+    char *result = malloc(MAX_SIZE * sizeof(char));
+    bzero(result, MAX_SIZE);
+
+    // Flag "found"
+    int found = 0;
+
+    // Start For-Loop
+    for (int i = 0; i < count; i++) {
+        // Create a copy of the Empoyee - Makes Code a bit easier
+        Employee e = employees[i];
+
+        // Check First Name & Last Name
+        // I am using a simple "or" and then to see if the value is still "zero"!
+        if ((strcmp(e.firstName, firstName) | strcmp(e.lastName, lastName)) == 0) {
+            // Set "found" flag to true
+            found = 1;
+            // Append Employee to results
+            append_employee_info(result, e);
+        }
+    }
+
+    // Check found Flag
+    if (found == 0) {
+        strcpy(result, "No matching records found.\n");
+    }
+
+    return result;
+}
+
+char *searchByZipCode(Employee employees[], int count, const char *zipCode) {
+    char *result = malloc(MAX_SIZE * sizeof(char));
+    bzero(result, MAX_SIZE);
+
+    // Flag "found"
+    int found = 0;
+
+    // Start For-Loop
+    for (int i = 0; i < count; i++) {
+        // Create a copy of the Empoyee - Makes Code a bit easier
+        Employee e = employees[i];
+
+        // Check Zip Code are equal to eachother
+        if (strcmp(e.zipCode, zipCode) == 0) {
+            // Set "found" flag to true
+            found = 1;
+
+            // Append Employee to results
+            append_employee_info(result, e);
+        }
+    }
+
+    // Check found Flag
+    if (found == 0) {
+        strcpy(result, "No matching records found.\n");
+    }
+
+    return result;
+}
+
+char *searchBySalary(Employee employees[], int count, int salary, const char *comparisonOperator) {
+    char *result = malloc(MAX_SIZE * sizeof(char));
+    bzero(result, MAX_SIZE);
+
+    // Flag "found"
+    int found = 0;
+
+    // Get the function pointer based on the operator string
+    int (*comparison)(int, int) = get_comp_func(comparisonOperator);
+
+    // Start For-Loop
+    for (int i = 0; i < count; i++) {
+        // Create a copy of the Empoyee - Makes Code a bit easier
+        Employee e = employees[i];
+
+        // Based on the Comparrison we will get a "0" or "1"
+        if (comparison(e.salary, salary))
+        {
+            // Set "found" flag to true
+            found = 1;
+
+            // Append Employee to results
+            append_employee_info(result, e);
+        }
+    }
+
+    // Check found Flag
+    if (found == 0)
+    {
+        strcpy(result, "No matching records found.\n");
+    }
+
+    return result;
+}
 
 // Main Server Application!
 int main(int argc, char *argv[])
@@ -45,6 +174,7 @@ int main(int argc, char *argv[])
     struct sockaddr_storage clientaddr; /* Enough space for any address */
 
     char client_hostname[MAXLINE], client_port[MAXLINE];
+
 
     if (argc != 2)
     {
@@ -67,6 +197,10 @@ int main(int argc, char *argv[])
 
         printf("Connected to (%s, %s)\n", client_hostname, client_port);
 
+         // Employee Setup
+        Employee employees[MAX_SIZE];
+        int employeeCount = updateEmployees(employees);
+
         while (1)
         {
             // Read the payload from client
@@ -82,19 +216,30 @@ int main(int argc, char *argv[])
             int sel = atoi(token); // Convert the first token to an int
 
             if(sel == 1){
-                serverWrite(connFd, "Sel 1:\nHello\n");
+                char *record = strtok(NULL, "\0");  // Capture the rest of the buffer as the record
+                appendToFile(record);
+                employeeCount = updateEmployees(employees);
+                serverWrite(connFd, "Record added Sucessfully!!\0");
             }
 
             if(sel == 2){
-                serverWrite(connFd, "Sel 2:\n");
+                char *firstName = strtok(NULL, ",");  // Get First Name
+                char *lastName = strtok(NULL, ",");  // Get Last Name
+                char *searchResult = searchByName(employees, employeeCount, firstName, lastName);
+                serverWrite(connFd, searchResult);
             }
 
             if(sel == 3){
-                serverWrite(connFd, "Sel 3:\n");
+                char *zipCode = strtok(NULL, ",");  // Get Zip Code
+                char *searchResult = searchByZipCode(employees, employeeCount, zipCode);
+                serverWrite(connFd, searchResult);
             }
 
             if(sel == 4){
-                serverWrite(connFd, "Sel 4:\n");
+                int salary = atoi(strtok(NULL, ","));
+                char *op = strtok(NULL, ",");
+                char *searchResult = searchBySalary(employees, employeeCount, salary, op);
+                serverWrite(connFd, searchResult);
             }
                 
             if (sel == 5)
@@ -112,6 +257,57 @@ int main(int argc, char *argv[])
     }
     exit(0);
 }
+
+
+/* -----------------------------------------------------------------------
+Func: updateEmployees()
+What: This function prints an error message based on input
+In:   - employee Array - Pointer
+Out:  - (int) count of employees
+----------------------------------------------------------------------- */
+int updateEmployees(Employee employees[]) {
+    FILE *file = fopen(FILENAME, "r");
+    int count = 0;
+
+    if (file == NULL) {
+        printf("Unable to open the file.\n");
+        return 1;
+    }
+
+    char line[MAX_SIZE];
+
+    while (fgets(line, sizeof(line), file)) {
+        sscanf(line, "%[^,],%[^,],%[^,],%[^,],%d",
+               employees[count].firstName,
+               employees[count].lastName,
+               employees[count].zipCode,
+               employees[count].department,
+               &employees[count].salary);
+        count++;
+    }
+
+    fclose(file); // Close File!
+    printf("Loaded %d employees!\n", count);
+    return count; // Return employee count!
+}
+
+
+void appendToFile(char *record) {
+    FILE *file = fopen(FILENAME, "a");  // Open in append mode
+    if (file == NULL) {
+        printf("Unable to open the file.\n");
+        return;
+    }
+
+    // Write the record and add a newline
+    fprintf(file, "\n%s", record);
+
+    fclose(file); // Close the file
+    return;
+}
+
+
+
 /* -----------------------------------------------------------------------
 Func: printError()
 What: This function prints an error message based on input
@@ -195,3 +391,5 @@ void printStars(int n)
     }
     printf("\n");
 }
+
+
