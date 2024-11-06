@@ -74,6 +74,9 @@ int main(int argc, char *argv[])
         // Start Prompt
         int sel = promptMenuSelect();
 
+        // Spacer
+        printf("\n");
+
         // Setup Vars
         char *firstName = NULL;
         char *lastName = NULL;
@@ -85,8 +88,8 @@ int main(int argc, char *argv[])
         // Add Record
         if (sel == 1)
         {
-            firstName = promptLineStr("Enter first name:");
-            lastName = promptLineStr("Enter last name:");
+            firstName = promptLineStr("Enter First Name:");
+            lastName = promptLineStr("Enter Last Name:");
             zipCode = promptLineStr("Enter Zip Code:");
             department = promptLineStr("Enter Department:");
             salary = promptLineInt("Enter Salary:");
@@ -97,10 +100,9 @@ int main(int argc, char *argv[])
         // Search By Name
         if (sel == 2)
         {
-            firstName = promptLineStr("Enter first name:");
-            lastName = promptLineStr("Enter last name:");
+            firstName = promptLineStr("Enter First Name:");
+            lastName = promptLineStr("Enter Last Name:");
             sprintf(payload, "2,%s,%s", firstName, lastName);
-            printf("Payload: %s\n", payload);
             sendPayload(clientFd, payload);
         }
 
@@ -168,7 +170,7 @@ void sendPayload(int fd, char * payload)
         return;
     }
 
-    printf("Message from Server:\n");
+    printf("\nMessage from Server:\n");
     // displaying the message in buffer on the console
     Fputs(buffer, stdout);
 }

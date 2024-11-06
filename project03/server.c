@@ -219,7 +219,7 @@ int main(int argc, char *argv[])
                 char *record = strtok(NULL, "\0");  // Capture the rest of the buffer as the record
                 appendToFile(record);
                 employeeCount = updateEmployees(employees);
-                serverWrite(connFd, "Record added Sucessfully!!\0");
+                serverWrite(connFd, "Record added Sucessfully!!\n");
             }
 
             if(sel == 2){
@@ -287,7 +287,6 @@ int updateEmployees(Employee employees[]) {
     }
 
     fclose(file); // Close File!
-    printf("Loaded %d employees!\n", count);
     return count; // Return employee count!
 }
 
@@ -351,9 +350,6 @@ char *serverRead(int fd)
     }
 
     buffer[n] = '\0'; // Null-terminate the string
-
-    printf("Server received %ld bytes message\n", n);
-    printf("Message from Client: %s\n", buffer);
 
     return buffer; // Return the buffer directly
 }
