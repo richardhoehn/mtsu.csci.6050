@@ -39,6 +39,10 @@ typedef struct
     char client_port[MAXLINE];
 } ClientInfo;
 
+// Create Global Mutex for File Access (Write)
+// This is a the specail Reader-Writer Mutex Lock
+pthread_rwlock_t file_rwlock = PTHREAD_RWLOCK_INITIALIZER;
+
 // Function Declarations
 void *handle_client(void *arg);
 char *serverRead(int);
@@ -209,8 +213,6 @@ int main(int argc, char *argv[])
     struct sockaddr_storage clientaddr; /* Enough space for any address */
     pthread_t tid;
 
-    //char client_hostname[MAXLINE], client_port[MAXLINE];
-
     if (argc != 2)
     {
         fprintf(stderr, "usage: %s <port>\n", argv[0]);
@@ -248,13 +250,14 @@ int main(int argc, char *argv[])
     }
 
     // This does not ever happen!
+    // Destroy the mutex when the server is done
+    pthread_rwlock_destroy(&file_rwlock);
     Close(listenfd); // Close the listening socket
     return 0;
 }
 
 void *handle_client(void *arg)
 {
-    char *buffer;
     ClientInfo *clientInfo = (ClientInfo *)arg;
     int connFd = clientInfo->connFd;
     char client_hostname[MAXLINE], client_port[MAXLINE];
@@ -337,6 +340,9 @@ Out:  - (int) count of employees
 ----------------------------------------------------------------------- */
 int updateEmployees(Employee employees[])
 {
+    // Lock file for reading
+    pthread_rwlock_rdlock(&file_rwlock);
+
     FILE *file = fopen(FILENAME, "r");
     int count = 0;
 
@@ -360,11 +366,16 @@ int updateEmployees(Employee employees[])
     }
 
     fclose(file); // Close File!
+    pthread_rwlock_unlock(&file_rwlock); // Unlock after reading
+
     return count; // Return employee count!
 }
 
 void appendToFile(char *record)
 {
+    // Lock for Writing!
+    pthread_rwlock_wrlock(&file_rwlock);
+
     FILE *file = fopen(FILENAME, "a"); // Open in append mode
     if (file == NULL)
     {
@@ -376,6 +387,10 @@ void appendToFile(char *record)
     fprintf(file, "\n%s", record);
 
     fclose(file); // Close the file
+
+    // Unlock after Writing to File / record
+    pthread_rwlock_unlock(&file_rwlock);
+
     return;
 }
 

@@ -41,7 +41,6 @@ int main(int argc, char *argv[])
     // Set Variables
     int clientFd;      // File Descriptor to communicate with the server
     char *host, *port; // String of Port & Host
-    size_t n;
 
     char buffer[MAXLINE]; // MAXLINE = 8192 defined in csapp.h
     char payload[MAXLINE];
