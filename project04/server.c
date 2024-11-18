@@ -9,6 +9,7 @@ Desc:  Server App
 */
 
 // Libs
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -31,7 +32,15 @@ typedef struct
 
 } Employee;
 
+typedef struct
+{
+    int connFd;
+    char client_hostname[MAXLINE];
+    char client_port[MAXLINE];
+} ClientInfo;
+
 // Function Declarations
+void *handle_client(void *arg);
 char *serverRead(int);
 void serverWrite(int, char *);
 void printStars(int);
@@ -48,17 +57,34 @@ int equal(int a, int b) { return a == b; }
 
 // With this special Funciotn we are mapping based on the comparison operator string
 // Note: This is a pointer coming back from the function to the definition
-int (*get_comp_func(const char *operator))(int, int) {
-    if (strcmp(operator, ">") == 0) { return &greater_than; }
-    if (strcmp(operator, "<") == 0) { return &less_than; }
-    if (strcmp(operator, ">=") == 0) { return &greater_than_or_equal; }
-    if (strcmp(operator, "<=") == 0) { return &less_than_or_equal; }
-    if (strcmp(operator, "==") == 0) { return &equal; }
+int (*get_comp_func(const char *operator))(int, int)
+{
+    if (strcmp(operator, ">") == 0)
+    {
+        return &greater_than;
+    }
+    if (strcmp(operator, "<") == 0)
+    {
+        return &less_than;
+    }
+    if (strcmp(operator, ">=") == 0)
+    {
+        return &greater_than_or_equal;
+    }
+    if (strcmp(operator, "<=") == 0)
+    {
+        return &less_than_or_equal;
+    }
+    if (strcmp(operator, "==") == 0)
+    {
+        return &equal;
+    }
     return NULL; // Return NULL if operator is invalid
 }
 
 // Function to append employee info into the result buffer using snprintf
-void append_employee_info(char *result, Employee e) {
+void append_employee_info(char *result, Employee e)
+{
     snprintf(
         result + strlen(result),   // Set the location to start writting
         MAX_SIZE - strlen(result), // Max Length to stop
@@ -70,7 +96,8 @@ void append_employee_info(char *result, Employee e) {
         e.salary);
 }
 
-char *searchByName(Employee employees[], int count, const char *firstName, const char *lastName) {
+char *searchByName(Employee employees[], int count, const char *firstName, const char *lastName)
+{
     char *result = malloc(MAX_SIZE * sizeof(char));
     bzero(result, MAX_SIZE);
 
@@ -78,13 +105,15 @@ char *searchByName(Employee employees[], int count, const char *firstName, const
     int found = 0;
 
     // Start For-Loop
-    for (int i = 0; i < count; i++) {
+    for (int i = 0; i < count; i++)
+    {
         // Create a copy of the Empoyee - Makes Code a bit easier
         Employee e = employees[i];
 
         // Check First Name & Last Name
         // I am using a simple "or" and then to see if the value is still "zero"!
-        if ((strcmp(e.firstName, firstName) | strcmp(e.lastName, lastName)) == 0) {
+        if ((strcmp(e.firstName, firstName) | strcmp(e.lastName, lastName)) == 0)
+        {
             // Set "found" flag to true
             found = 1;
             // Append Employee to results
@@ -93,14 +122,16 @@ char *searchByName(Employee employees[], int count, const char *firstName, const
     }
 
     // Check found Flag
-    if (found == 0) {
+    if (found == 0)
+    {
         strcpy(result, "No matching records found.\n");
     }
 
     return result;
 }
 
-char *searchByZipCode(Employee employees[], int count, const char *zipCode) {
+char *searchByZipCode(Employee employees[], int count, const char *zipCode)
+{
     char *result = malloc(MAX_SIZE * sizeof(char));
     bzero(result, MAX_SIZE);
 
@@ -108,12 +139,14 @@ char *searchByZipCode(Employee employees[], int count, const char *zipCode) {
     int found = 0;
 
     // Start For-Loop
-    for (int i = 0; i < count; i++) {
+    for (int i = 0; i < count; i++)
+    {
         // Create a copy of the Empoyee - Makes Code a bit easier
         Employee e = employees[i];
 
         // Check Zip Code are equal to eachother
-        if (strcmp(e.zipCode, zipCode) == 0) {
+        if (strcmp(e.zipCode, zipCode) == 0)
+        {
             // Set "found" flag to true
             found = 1;
 
@@ -123,14 +156,16 @@ char *searchByZipCode(Employee employees[], int count, const char *zipCode) {
     }
 
     // Check found Flag
-    if (found == 0) {
+    if (found == 0)
+    {
         strcpy(result, "No matching records found.\n");
     }
 
     return result;
 }
 
-char *searchBySalary(Employee employees[], int count, int salary, const char *comparisonOperator) {
+char *searchBySalary(Employee employees[], int count, int salary, const char *comparisonOperator)
+{
     char *result = malloc(MAX_SIZE * sizeof(char));
     bzero(result, MAX_SIZE);
 
@@ -141,7 +176,8 @@ char *searchBySalary(Employee employees[], int count, int salary, const char *co
     int (*comparison)(int, int) = get_comp_func(comparisonOperator);
 
     // Start For-Loop
-    for (int i = 0; i < count; i++) {
+    for (int i = 0; i < count; i++)
+    {
         // Create a copy of the Empoyee - Makes Code a bit easier
         Employee e = employees[i];
 
@@ -169,12 +205,11 @@ char *searchBySalary(Employee employees[], int count, int salary, const char *co
 int main(int argc, char *argv[])
 {
     int listenfd;
-    int connFd; // file descriptor to communicate with the client
     socklen_t clientlen;
     struct sockaddr_storage clientaddr; /* Enough space for any address */
+    pthread_t tid;
 
-    char client_hostname[MAXLINE], client_port[MAXLINE];
-
+    //char client_hostname[MAXLINE], client_port[MAXLINE];
 
     if (argc != 2)
     {
@@ -190,74 +225,109 @@ int main(int argc, char *argv[])
     {
         clientlen = sizeof(struct sockaddr_storage);
 
-        // wait for the connection from the client.
-        connFd = Accept(listenfd, (SA *)&clientaddr, &clientlen);
-        Getnameinfo((SA *)&clientaddr, clientlen, client_hostname,
-                    MAXLINE, client_port, MAXLINE, 0);
+        // Wait for the connection from a client
+        int *connFd = malloc(sizeof(int)); // Allocate memory for client socket descriptor
+        *connFd = Accept(listenfd, (SA *)&clientaddr, &clientlen);
 
-        printf("Connected to (%s, %s)\n", client_hostname, client_port);
+        if (*connFd < 0)
+        {
+            free(connFd);
+            continue; // Skip to the next iteration if accept fails
+        }
 
-         // Employee Setup
+        // Allocate memory for ClientInfo and fill it
+        ClientInfo *clientInfo = malloc(sizeof(ClientInfo));
+        clientInfo->connFd = *connFd;
+        free(connFd); // Free the old pointer as it's no longer needed
+        Getnameinfo((SA *)&clientaddr, clientlen, clientInfo->client_hostname, MAXLINE, clientInfo->client_port, MAXLINE, 0);
+        printf("Connected to (%s, %s)\n", clientInfo->client_hostname, clientInfo->client_port);
+
+        // Create a new thread to handle the client connection
+        pthread_create(&tid, NULL, handle_client, clientInfo);
+        pthread_detach(tid); // Detach the thread so it cleans up after itself
+    }
+
+    // This does not ever happen!
+    Close(listenfd); // Close the listening socket
+    return 0;
+}
+
+void *handle_client(void *arg)
+{
+    char *buffer;
+    ClientInfo *clientInfo = (ClientInfo *)arg;
+    int connFd = clientInfo->connFd;
+    char client_hostname[MAXLINE], client_port[MAXLINE];
+    strcpy(client_hostname, clientInfo->client_hostname);
+    strcpy(client_port, clientInfo->client_port);
+    free(clientInfo); // Free allocated memory for client info
+
+    while (1)
+    {
+        // Read the payload from client
+        char *buffer = serverRead(connFd);
+        if (buffer == NULL)
+        {
+            printError("Buffer Corrupt!");
+            break;
+        }
+
+        // Parse the buffer in the main loop
+        char *token = strtok(buffer, ",");
+        int sel = atoi(token); // Convert the first token to an int
+
+        // 1 = Add Record
+        if (sel == 1)
+        {
+            char *record = strtok(NULL, "\0"); // Capture the rest of the buffer as the record
+            appendToFile(record);
+            serverWrite(connFd, "Record added Sucessfully!!\n");
+        }
+
+        // From This poitn On We Need to Rad Employees
         Employee employees[MAX_SIZE];
         int employeeCount = updateEmployees(employees);
 
-        while (1)
+        // 2 = Search by Name
+        if (sel == 2)
         {
-            // Read the payload from client
-            char *buffer = serverRead(connFd);
-            if (buffer == NULL)
-            {
-                printError("Buffer Corrupt!");
-                break;
-            }
-
-            // Parse the buffer in the main loop
-            char *token = strtok(buffer, ",");
-            int sel = atoi(token); // Convert the first token to an int
-
-            if(sel == 1){
-                char *record = strtok(NULL, "\0");  // Capture the rest of the buffer as the record
-                appendToFile(record);
-                employeeCount = updateEmployees(employees);
-                serverWrite(connFd, "Record added Sucessfully!!\n");
-            }
-
-            if(sel == 2){
-                char *firstName = strtok(NULL, ",");  // Get First Name
-                char *lastName = strtok(NULL, ",");  // Get Last Name
-                char *searchResult = searchByName(employees, employeeCount, firstName, lastName);
-                serverWrite(connFd, searchResult);
-            }
-
-            if(sel == 3){
-                char *zipCode = strtok(NULL, ",");  // Get Zip Code
-                char *searchResult = searchByZipCode(employees, employeeCount, zipCode);
-                serverWrite(connFd, searchResult);
-            }
-
-            if(sel == 4){
-                int salary = atoi(strtok(NULL, ","));
-                char *op = strtok(NULL, ",");
-                char *searchResult = searchBySalary(employees, employeeCount, salary, op);
-                serverWrite(connFd, searchResult);
-            }
-                
-            if (sel == 5)
-            {
-                serverWrite(connFd, "Connection Closed!!\n");
-                break; // Exit Reading Loop & close Connection
-            }
-            
-
-            free(buffer); // Free allocated buffer after processing
+            char *firstName = strtok(NULL, ","); // Get First Name
+            char *lastName = strtok(NULL, ",");  // Get Last Name
+            char *searchResult = searchByName(employees, employeeCount, firstName, lastName);
+            serverWrite(connFd, searchResult);
         }
 
-        Close(connFd);
-        printf("(%s, %s) disconnected\n", client_hostname, client_port);
-    }
-    exit(0);
-}
+        // 3 = Search by Zip Code
+        if (sel == 3)
+        {
+            char *zipCode = strtok(NULL, ","); // Get Zip Code
+            char *searchResult = searchByZipCode(employees, employeeCount, zipCode);
+            serverWrite(connFd, searchResult);
+        }
 
+        // 4 = Search by Salary Operator
+        if (sel == 4)
+        {
+            int salary = atoi(strtok(NULL, ","));
+            char *op = strtok(NULL, ",");
+            char *searchResult = searchBySalary(employees, employeeCount, salary, op);
+            serverWrite(connFd, searchResult);
+        }
+
+        // 5 = Close Connection to Client
+        if (sel == 5)
+        {
+            serverWrite(connFd, "Connection Closed!!\n");
+            break; // Exit Reading Loop & close Connection
+        }
+
+        free(buffer); // Free allocated buffer after processing
+    }
+
+    Close(connFd);
+    printf("(%s, %s) disconnected\n", client_hostname, client_port);
+    pthread_exit(NULL);
+}
 
 /* -----------------------------------------------------------------------
 Func: updateEmployees()
@@ -265,18 +335,21 @@ What: This function prints an error message based on input
 In:   - employee Array - Pointer
 Out:  - (int) count of employees
 ----------------------------------------------------------------------- */
-int updateEmployees(Employee employees[]) {
+int updateEmployees(Employee employees[])
+{
     FILE *file = fopen(FILENAME, "r");
     int count = 0;
 
-    if (file == NULL) {
+    if (file == NULL)
+    {
         printf("Unable to open the file.\n");
         return 1;
     }
 
     char line[MAX_SIZE];
 
-    while (fgets(line, sizeof(line), file)) {
+    while (fgets(line, sizeof(line), file))
+    {
         sscanf(line, "%[^,],%[^,],%[^,],%[^,],%d",
                employees[count].firstName,
                employees[count].lastName,
@@ -290,10 +363,11 @@ int updateEmployees(Employee employees[]) {
     return count; // Return employee count!
 }
 
-
-void appendToFile(char *record) {
-    FILE *file = fopen(FILENAME, "a");  // Open in append mode
-    if (file == NULL) {
+void appendToFile(char *record)
+{
+    FILE *file = fopen(FILENAME, "a"); // Open in append mode
+    if (file == NULL)
+    {
         printf("Unable to open the file.\n");
         return;
     }
@@ -304,8 +378,6 @@ void appendToFile(char *record) {
     fclose(file); // Close the file
     return;
 }
-
-
 
 /* -----------------------------------------------------------------------
 Func: printError()
@@ -321,7 +393,6 @@ void printError(const char *strError)
     printStars(strlen(strError) + 8);
     printf("\n");
 }
-
 
 /* -----------------------------------------------------------------------
 Func: serverRead()
@@ -354,15 +425,14 @@ char *serverRead(int fd)
     return buffer; // Return the buffer directly
 }
 
-
 /* -----------------------------------------------------------------------
 Func: serverWrite()
 What: This function writes back to Client
 In: - (int) File Descriptor
-    - (char *) Payload to send 
+    - (char *) Payload to send
 Out:  void
 ----------------------------------------------------------------------- */
-void serverWrite(int fd, char * payload)
+void serverWrite(int fd, char *payload)
 {
     int n = write(fd, payload, strlen(payload));
     if (n < 0)
@@ -371,7 +441,6 @@ void serverWrite(int fd, char * payload)
         return;
     }
 }
-
 
 /* -----------------------------------------------------------------------
 Func: printStars()
@@ -387,5 +456,3 @@ void printStars(int n)
     }
     printf("\n");
 }
-
-
