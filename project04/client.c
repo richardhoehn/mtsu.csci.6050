@@ -117,7 +117,6 @@ int main(int argc, char *argv[])
         if (sel == 4)
         {
             salary = promptLineInt("Enter Salary:");
-            printf("Salary: %d\n", salary);
             opIdx = promptLineOps("Enter Comparision Type ['>','<','==','>=','<=']:");
             sprintf(payload, "4,%d,%s", salary, VALID_OPS[opIdx]);
             sendPayload(clientFd, payload);
