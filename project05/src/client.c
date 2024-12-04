@@ -2,8 +2,8 @@
 
 Name:  Richard Hoehn
 Class: CSCI-6050
-Proj:  Final
-Date:  2024-11-07
+Proj:  Final -> Tic-Tac-Toe
+Date:  2024-12-03
 Desc:  Client App - Final Project
 
 */
@@ -17,6 +17,7 @@ Desc:  Client App - Final Project
 // Includes
 #include "csapp.h"
 #include "helper.h"
+#include "tictactoe.h"
 
 // Function Declarations
 char *promptLine(char *);
@@ -70,10 +71,9 @@ int main(int argc, char *argv[])
         // Read Response
         readPayload(clientFd, buffer);
 
-        printf("Server Message: %s\n", buffer);
-
         // Parse the buffer in the main loop
         char *token = strtok(buffer, ",");
+        char charBoard[MAXLINE];
 
         int cmd = atoi(token); // Convert the first token to an int
 
@@ -81,17 +81,36 @@ int main(int argc, char *argv[])
         switch (cmd)
         {
         case 1: // Server Requests "Name"
-            printError("   Welcome to Tic-Tac-Toe   ");
+            printMessage("Welcome to Tic-Tac-Toe", "", 1);
             sendName(clientFd);
+            printMessage("Waiting For Player", "", 0);
             break;
         case 2: // Server Requests "Player Move"
+            printMessage("Welcome to Tic-Tac-Toe", "Your Move", 1);
+            drawBoard(charBoard);
             sendPlayerMove(clientFd);
             break;
         case 3: // Draw Board
             token = strtok(NULL, ",");
-            printf("Board: %s\n", token);
+            strncpy(charBoard, token, MAXLINE - 1);
             break;
-        case 99: // close Connection
+        case 4: // Wait
+            printMessage("Welcome to Tic-Tac-Toe", "Waiting...", 1);
+            drawBoard(charBoard);
+            break;
+        case 5: // You Win
+            printMessage("Winner!!!", "Great Job", 1);
+            drawBoard(charBoard);
+            break;
+        case 6: // You lost
+            printMessage("Sorry You Lost", "Maybe Next Time", 1);
+            drawBoard(charBoard);
+            break;
+        case 7: // Draw
+            printMessage("Draw!!!", "Nobody Won or Lost", 1);
+            drawBoard(charBoard);
+            break;
+        case 99: // Close Connection
             loop = 0;
             break;
         default:
@@ -112,15 +131,18 @@ void sendName(int clientFd)
 {
     // Get Name and Send to Server!
     char *name = promptLineStr("Enter your Name:");
-    printf("Sending: %s\n", name);
+
     sendPayload(clientFd, name);
+
+    printMessage("Welcome to Tic-Tac-Toe", name, 1);
+
 }
 
 void sendPlayerMove(int clientFd)
 {
     // Get Move and Send to Server!
     int move = promptLineInt("Enter your Move:");
-    printf("Sending: %d\n", move);
+
     char payload[MAXLINE];
     sprintf(payload, "%d", move);
     sendPayload(clientFd, payload);

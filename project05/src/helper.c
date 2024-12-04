@@ -1,9 +1,37 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <unistd.h>
 
 #include "csapp.h"
 #include "helper.h"
+
+
+/* -----------------------------------------------------------------------
+Func: clearScreen()
+What: This function clears the command line screen
+In:   void
+Out:  void
+----------------------------------------------------------------------- */
+void msleep(int milliseconds) {
+    usleep(milliseconds * 1000); // Convert milliseconds to microseconds
+}
+
+/* -----------------------------------------------------------------------
+Func: clearScreen()
+What: This function clears the command line screen
+In:   void
+Out:  void
+----------------------------------------------------------------------- */
+void clearScreen()
+{
+#ifdef _WIN32
+    system("cls"); // Windows
+#else
+    system("clear"); // Unix/Linux/MacOS
+#endif
+}
 
 /* -----------------------------------------------------------------------
 Func: printStars()
@@ -32,6 +60,40 @@ void printError(const char *strError)
     printStars(strlen(strError) + 8);
     printf("!!! %s !!!\n", strError);
     printStars(strlen(strError) + 8);
+    printf("\n");
+}
+
+/* -----------------------------------------------------------------------
+Func: printMessage()
+What: This function prints an error message based on input
+In:   char array
+Out:  void
+----------------------------------------------------------------------- */
+void printMessage(const char *strMsg1, const char *strMsg2, const int clr)
+{
+    int msgLen = strlen(strMsg1) > strlen(strMsg2) ? strlen(strMsg1) : strlen(strMsg2);
+    int totalWidth = msgLen + 8;
+
+    if (clr == 1)
+    {
+        clearScreen();
+    }
+
+    printf("\n");
+    printStars(totalWidth);
+
+    // Center and print strMsg1
+    int padding1 = (msgLen - strlen(strMsg1)) / 2;
+    printf("**  %*s%-*s  **\n", padding1, "", msgLen - padding1, strMsg1);
+
+    if (strlen(strMsg2) > 0)
+    {
+        // Center and print strMsg2
+        int padding2 = (msgLen - strlen(strMsg2)) / 2;
+        printf("**  %*s%-*s  **\n", padding2, "", msgLen - padding2, strMsg2);
+    }
+
+    printStars(totalWidth);
     printf("\n");
 }
 
@@ -109,77 +171,4 @@ void readPayload(int fd, char *payload)
     payload[n] = '\0'; // Null-terminate the payload to ensure it is a valid string
 
     return; // Return the number of bytes read
-}
-
-
-void drawBoard(char * board){
-    printf("Board: %s", board);
-    return;
-}
-
-// Function to encode the 2D board into a string
-char *encodeBoard(int *board)
-{
-    char *encoded = malloc(MAX_BUFFER);
-    if (!encoded)
-    {
-        printf("Memory allocation failed\n");
-        return NULL;
-    }
-    encoded[0] = '\0'; // Initialize as empty string
-
-    // Add Command
-    strcat(encoded, "3,");
-
-    for (int i = 0; i < BOARD_ROWS * BOARD_COLS; i++)
-    {
-        char temp[2]; // Temporary buffer for each number
-        sprintf(temp, "%d", board[i]);
-        strcat(encoded, temp);
-
-        // Add delimiter
-        strcat(encoded, BOARD_DEL);
-    }
-
-    return encoded;
-}
-
-// Function to decode the string back into a 2D board
-int *decodeBoard(char *encoded)
-{
-    static int board[BOARD_ROWS * BOARD_COLS]; // Static to return pointer safely
-    char *token = strtok(encoded, BOARD_DEL);
-    int i = 0;
-
-    while (token != NULL)
-    {
-        board[i] = atoi(token);
-        token = strtok(NULL, BOARD_DEL);
-        i++;
-    }
-
-    return &board[0]; // Return pointer to the first element
-}
-
-// Function to check board for winner
-int checkBoard(int *board)
-{
-    int winner = 9;
-
-    // Check Horizontal
-    if(board[0] == board[1] == board[2] || board[3] == board[4] == board[5] || board[6] == board[7] == board[8]){
-        winner = board[0];
-    } 
-
-    // Check Veritcal
-    if(board[0] == board[3] == board[6] || board[1] == board[4] == board[7] || board[2] == board[5] == board[8]){
-        winner = board[0];
-    }  
-
-    // Diagonal "\" & "/"
-    if(board[0] == board[4] == board[8] || board[6] == board[4] == board[2]){
-        winner = board[4];
-    } 
-
-    return winner;
 }

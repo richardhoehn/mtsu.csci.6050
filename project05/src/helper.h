@@ -27,19 +27,18 @@ typedef struct
     int moveCnt;
 } Game;
 
+// Sleep Function
+void msleep(int);
+
 // General Simple Functions
+void clearScreen();
 void printStars(int n);
 void printError(const char *);
+void printMessage(const char *, const char *, const int);
 int isNumber(const char *);
 
 // Socket Comunications
 void sendPayload(int, char *);
 void readPayload(int, char *);
-
-// Board / Game Functions
-void drawBoard(char *);
-char *encodeBoard(int *);
-int *decodeBoard(char *);
-int checkBoard(int *);
 
 #endif // HELPER_H

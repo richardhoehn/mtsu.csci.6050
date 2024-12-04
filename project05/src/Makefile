@@ -1,31 +1,31 @@
-# What: Make File for Project 3
+# What: Make File for Final Project
 # By:   Richard Hoehn
-# When: 2024-10-23
+# When: 2024-12-08
 
-# Compiler and flags
+## Compiler and flags
 CC = gcc
 CFLAGS = -Wall
 
-# Target executables
+# Source files and target executables
+SOURCES = server.c client.c csapp.c helper.c tictactoe.c
+OBJS = $(SOURCES:.c=.o)
 TARGETS = server client
 
-# Source files
-SOURCES = server.c client.c csapp.c helper.c
-
-# Object files
-OBJS = $(SOURCES:.c=.o)
-
-# All: build both executables
+# Default target
 all: $(TARGETS)
 
-# Build server executable
-server: server.o csapp.o helper.o
-	$(CC) -o server server.o csapp.o helper.o
+# Build server
+server: server.o csapp.o helper.o tictactoe.o
+	$(CC) -o $@ $^
 
-# Build client executable
-client: client.o csapp.o helper.o
-	$(CC) -o client client.o csapp.o helper.o
+# Build client
+client: client.o csapp.o helper.o tictactoe.o
+	$(CC) -o $@ $^
 
-# Clean: remove object files and executables
+# Compile object files
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Clean
 clean:
 	rm -f $(OBJS) $(TARGETS)
